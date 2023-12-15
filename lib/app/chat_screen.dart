@@ -8,6 +8,7 @@ import 'common/eventbus.dart';
 import 'common/platform.dart';
 import 'model/chat_info.dart';
 import 'common/uuid.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 const smallSpacing = 10.0;
 const colDivider = SizedBox(height: 10);
@@ -353,15 +354,21 @@ class _ChatState extends State<Chat> {
             return Text('Error: ${snapshot.error}');
           } else {
             state.content += snapshot.data ?? '';
-            return Text(state.content,
-                style: Theme.of(context).textTheme.bodyMedium);
+            state.content = state.content.replaceAll("\n", "\r\n");
+            // return Text(state.content,
+            //     style: Theme.of(context).textTheme.bodyMedium);
+            return MarkdownBody(data: state.content, styleSheetTheme: MarkdownStyleSheetBaseTheme.material);
           }
         },
       );
     } else if (state.isDone == 2) {
-      return Text(state.content, style: Theme.of(context).textTheme.bodyMedium);
+      //return Text(state.content, style: Theme.of(context).textTheme.bodyMedium);
+      state.content = state.content.replaceAll("\n", "\r\n");
+      return MarkdownBody(data: state.content, styleSheetTheme: MarkdownStyleSheetBaseTheme.material);
     } else {
-      return Text(state.content, style: Theme.of(context).textTheme.bodyMedium);
+      // return Text(state.content, style: Theme.of(context).textTheme.bodyMedium);
+      state.content = state.content.replaceAll("\n", "\r\n");
+      return MarkdownBody(data: state.content, styleSheetTheme: MarkdownStyleSheetBaseTheme.material);
     }
   }
 }
